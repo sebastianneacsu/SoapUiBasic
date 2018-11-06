@@ -29,3 +29,11 @@ def tac = list.ResultSet.'*'.find{ node ->
 } catch (AssertionError e) {
 	log.info("Wrong values returned. REST <> DATABASE: " + e.getMessage())
 }
+
+
+//compare number of results from DB to REST
+try {
+  assert exercise.Row.size() == responseHttp.size(): "DB  count = REST count" 
+} catch (AssertionError e) {
+	log.info("Wrong number of results: " + e.getMessage())
+}
