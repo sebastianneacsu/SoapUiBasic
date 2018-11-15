@@ -37,3 +37,9 @@ try {
 } catch (AssertionError e) {
 	log.info("Wrong number of results: " + e.getMessage())
 }
+
+//prompt for data and set value to test suite property
+import com.eviware.soapui.support.*
+def alert = com.eviware.soapui.support.UISupport
+def cookie = alert.prompt("Paste JSESSION ID COOKIE","JSESSION ID COOKIE")
+testRunner.testCase.testSuite.setPropertyValue( "session_cookie", cookie)
