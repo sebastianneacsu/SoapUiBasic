@@ -17,20 +17,25 @@ project.testSuiteList.each { suite ->
            //if test name contains the given pattern, then disable, enable otherwise.
               if (caze.name.toLowerCase().contains(testNamePatternToDisable)) {
                 caze.disabled = true
+                
+                //add temporary_disabled_ to the test case name
+                def testCaseName = caze.getName()
+                caze.setName("temporary_disabled_" + testCaseName)
             } else {
                 caze.disabled = false
             }
 	}
 }
 
+
 /**
 * this groovy script enables all the test cases
-* except whose name contains the string specified in the
+* whose name contains the string specified in the
 * variable 'testNamePatternToDisable'
 **/
 
 //You may change the pattern required
-def testNamePatternToDisable = 'disabled'
+def testNamePatternToDisable = 'temporary_disabled_'
 
 //Get the project object
 def project = context.testCase.testSuite.project
@@ -41,8 +46,14 @@ project.testSuiteList.each { suite ->
     suite.testCaseList.each { caze ->
             //if test name contains the given pattern, then enable
       
-            if (caze.name.contains(testNamePatternToDisable) == false) {
-                caze.disabled = false	
+            if (caze.name.contains(testNamePatternToDisable)) {
+                caze.disabled = false
+ 			 
+ 			 //remove temporary_disabled_ from test case name
+ 			 def testCaseName = caze.getName()
+ 			 def reg = ~/^temporary_disabled_/   //Match 'temporary_disabled_' if it is at the beginning of the String
+			 caze.setName(testCaseName - reg)
+                	
             } 
        }
 }
