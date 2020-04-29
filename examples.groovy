@@ -43,3 +43,8 @@ import com.eviware.soapui.support.*
 def alert = com.eviware.soapui.support.UISupport
 def cookie = alert.prompt("Paste JSESSION ID COOKIE","JSESSION ID COOKIE")
 testRunner.testCase.testSuite.setPropertyValue( "session_cookie", cookie)
+
+//get random element from list
+def nameList = ["Jon", "Mike", "Alexia"]
+Collections.shuffle(nameList)
+log.info "random name=" + nameList[0]
